@@ -19,9 +19,9 @@ int main(int argc, char **argv)
 
   GoString name = { argv[1], strlen(argv[1]) };
 
-  SayHello(name);
+  say_hello(name);
 
-  SayBye();
+  say_bye();
 
   return 0;
 }
