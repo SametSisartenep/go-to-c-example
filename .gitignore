@@ -2,3 +2,4 @@
 *.a
 tags
 hi
+.ninja*
