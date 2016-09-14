@@ -1,0 +1,20 @@
+cflags = -Wall -Wextra -Werror -fpie
+ldflags = -pie -Wl,-z,relro -Wl,-z,now
+includes = -I.
+libs = -pthread
+
+rule cc_obj
+  command = $${CC:-clang} $cflags $includes -c $in -o $out
+  description = CCOBJ $out
+rule cc
+  command = $${CC:-clang} $cflags $ldflags $libs -o $out $in
+  description = CC $out
+rule goc
+  command = go build -buildmode=c-archive -o $out $in
+  description = GOC $out
+
+build hibye.a | hibye.h: goc src/hibye.go
+
+build hi.o: cc_obj src/hi.c | hibye.a
+
+build hi: cc hi.o hibye.a | hi.o hibye.a
